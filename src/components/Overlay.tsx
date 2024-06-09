@@ -2,7 +2,12 @@ import { IconButton, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-const Overlay = (): React.ReactNode => {
+interface OverlayProps {
+  onEdit: () => void;
+  onDelete: () => void;
+}
+
+const Overlay = ({ onEdit, onDelete }: OverlayProps): React.ReactNode => {
   return (
     <Stack
       position='absolute'
@@ -18,10 +23,10 @@ const Overlay = (): React.ReactNode => {
         cursor: 'grab'
       }}
     >
-      <IconButton data-no-dnd size='large' color='warning'>
+      <IconButton data-no-dnd size='large' color='warning' onClick={onDelete}>
         <DeleteIcon />
       </IconButton>
-      <IconButton data-no-dnd size='large' color='primary'>
+      <IconButton data-no-dnd size='large' color='primary' onClick={onEdit}>
         <EditIcon />
       </IconButton>
     </Stack>

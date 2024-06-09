@@ -14,7 +14,7 @@ interface ColumnProps {
 const Column = ({ id, hover = false }: ColumnProps): React.ReactNode => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
   const { hasHover, style: hoverParentStyle, callbacks: hoverCallbacks } = useHover(hover);
-  const { getColumnTasks, getColumnData } = useBoardContext();
+  const { getColumnTasks, getColumnData, deleteColumn } = useBoardContext();
 
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',
@@ -28,7 +28,7 @@ const Column = ({ id, hover = false }: ColumnProps): React.ReactNode => {
   return (
     <Stack width={300} gap={1.5} ref={setNodeRef} style={style}>
       <Paper variant='outlined' sx={{ ...hoverParentStyle, padding: 1.5, cursor: 'grab' }} {...attributes} {...listeners} {...hoverCallbacks}>
-        {hasHover && <Overlay />}
+        {hasHover && <Overlay onDelete={() => deleteColumn(id)} onEdit={() => {}} />}
         <Typography sx={{ userSelect: 'none' }} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
       </Paper>
       <Paper variant='outlined' sx={{ padding: 1.5, minHeight: 200 }} >

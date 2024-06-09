@@ -13,7 +13,7 @@ interface TaskProps {
 const Task = ({ id, hover = false }: TaskProps): React.ReactNode => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
   const { hasHover, style: hoverParentStyle, callbacks: hoverCallbacks } = useHover(hover);
-  const { getTaskData } = useBoardContext();
+  const { getTaskData, deleteTask } = useBoardContext();
 
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',
@@ -32,7 +32,7 @@ const Task = ({ id, hover = false }: TaskProps): React.ReactNode => {
       {...attributes}
     >
       <CardContent sx={hoverParentStyle} {...hoverCallbacks}>
-        {hasHover && <Overlay />}
+        {hasHover && <Overlay onDelete={() => deleteTask(id)} onEdit={() => {}} />}
         <Typography variant='body1' pb={1}>{title}</Typography>
         <Divider />
         <Typography variant='body2' pt={1}>{description}</Typography>
