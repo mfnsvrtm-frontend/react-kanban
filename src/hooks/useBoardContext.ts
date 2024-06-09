@@ -14,6 +14,7 @@ export interface BoardContext {
   moveColumn: (id: Id, to: Id) => void;
   deleteTask: (id: Id) => void;
   deleteColumn: (id: Id) => void;
+  addItem: (columnId: Id) => void;
 }
 
 export const useBoardContext = (): BoardContext => {
@@ -106,6 +107,20 @@ export const useBoardContext = (): BoardContext => {
     setTaskData(newTaskData);
   }
 
+  const addItem = (columnId: Id, data: TaskData) => {
+    const id = nanoid();
+
+    setBoard({
+      ...board,
+      [columnId]: [...board[columnId], id]
+    });
+
+    setTaskData({
+      ...taskData,
+      [id]: data
+    });
+  }
+
   return {
     columns,
     isColumn,
@@ -117,5 +132,6 @@ export const useBoardContext = (): BoardContext => {
     moveColumn,
     deleteTask,
     deleteColumn,
+    addItem,
   };
 };
