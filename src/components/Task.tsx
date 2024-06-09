@@ -1,9 +1,9 @@
 import { Card, CardContent, Divider, Typography } from '@mui/material';
-import { useState } from 'react';
-import TaskOverlay from './TaskOverlay';
 import { useSortable } from '@dnd-kit/sortable';
 import { Id } from '../types';
 import { useBoardContext } from './BoardContextProvider';
+import Overlay from './Overlay';
+import useHover from '../hooks/useHover';
 
 interface TaskProps {
   id: Id;
@@ -12,8 +12,8 @@ interface TaskProps {
 
 const Task = ({ id, hover = false }: TaskProps): React.ReactNode => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const { hasHover, style: hoverParentStyle, callbacks: hoverCallbacks } = useHover(hover);
   const { getTaskData } = useBoardContext();
-  const [hasHover, setHasHover] = useState(hover);
 
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',
@@ -27,14 +27,12 @@ const Task = ({ id, hover = false }: TaskProps): React.ReactNode => {
     <Card
       ref={setNodeRef}
       variant='outlined'
-      sx={{ position: 'relative', ...style }}
-      onMouseEnter={hover ? noop : () => setHasHover(true)}
-      onMouseLeave={hover ? noop : () => setHasHover(false)}
+      style={style}
       {...listeners}
       {...attributes}
     >
-      <CardContent>
-        {hasHover && <TaskOverlay />}
+      <CardContent sx={hoverParentStyle} {...hoverCallbacks}>
+        {hasHover && <Overlay />}
         <Typography variant='body1' pb={1}>{title}</Typography>
         <Divider />
         <Typography variant='body2' pt={1}>{description}</Typography>
@@ -43,6 +41,6 @@ const Task = ({ id, hover = false }: TaskProps): React.ReactNode => {
   );
 };
 
-const noop = () => {};
+const noop = () => { };
 
 export default Task;

@@ -2,7 +2,7 @@ import { IconButton, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-const TaskOverlay = (): React.ReactNode => {
+const Overlay = (): React.ReactNode => {
   return (
     <Stack
       position='absolute'
@@ -28,4 +28,4 @@ const TaskOverlay = (): React.ReactNode => {
   );
 };
 
-export default TaskOverlay;
+export default Overlay;

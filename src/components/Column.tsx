@@ -3,13 +3,17 @@ import { Paper, Stack, Typography } from '@mui/material';
 import Task from './Task';
 import { Id } from '../types';
 import { useBoardContext } from './BoardContextProvider';
+import Overlay from './Overlay';
+import useHover from '../hooks/useHover';
 
 interface ColumnProps {
-  id: Id
+  id: Id;
+  hover?: boolean;
 }
 
-const Column = ({ id }: ColumnProps): React.ReactNode => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id});
+const Column = ({ id, hover = false }: ColumnProps): React.ReactNode => {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const { hasHover, style: hoverParentStyle, callbacks: hoverCallbacks } = useHover(hover);
   const { getColumnTasks, getColumnData } = useBoardContext();
 
   const style = {
@@ -23,8 +27,9 @@ const Column = ({ id }: ColumnProps): React.ReactNode => {
 
   return (
     <Stack width={300} gap={1.5} ref={setNodeRef} style={style}>
-      <Paper variant='outlined' sx={{ padding: 1.5, cursor: 'grab' }} {...attributes} {...listeners}>
-        <Typography sx={{userSelect: 'none'}} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
+      <Paper variant='outlined' sx={{ ...hoverParentStyle, padding: 1.5, cursor: 'grab' }} {...attributes} {...listeners} {...hoverCallbacks}>
+        {hasHover && <Overlay />}
+        <Typography sx={{ userSelect: 'none' }} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
       </Paper>
       <Paper variant='outlined' sx={{ padding: 1.5, minHeight: 200 }} >
         <Stack gap={1.5}>
