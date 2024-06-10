@@ -20,14 +20,11 @@ const Board = (): React.ReactNode => {
     <Stack direction='row' gap={2} height={1} paddingBlock={2}>
       <DndContext
         sensors={sensors}
-        onDragOver={({ active, over }) => {
+        onDragOver={({ over }) => {
           if (!over || !activeId) return;
           if (isColumn(activeId)) return;
 
           const overId = over.id as string;
-
-          const activeColumn = getColumnById(activeId);
-          const overColumn = getColumnById(overId);
 
           if (isColumn(activeId)) {
             moveColumn(activeId, overId);
