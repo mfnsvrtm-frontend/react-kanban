@@ -5,13 +5,13 @@ import { DndContext, DragOverlay, useSensor, useSensors } from '@dnd-kit/core';
 import { useState } from 'react';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { MouseSensor } from '../utils/sensors';
-import { useBoardContext } from '../hooks/useBoardContext';
-import BoardContextProvider from './BoardContextProvider';
+import { useBoard } from '../hooks/useBoard';
+import { BoardContextProvider } from './BoardContextProvider';
 
 const Board = (): React.ReactNode => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const context = useBoardContext();
+  const context = useBoard();
   const { columns, isColumn, getColumnById, moveTask, moveColumn } = context;
 
   const sensors = useSensors(

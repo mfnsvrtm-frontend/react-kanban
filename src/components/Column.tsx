@@ -40,7 +40,7 @@ const Column = ({ id, hover = false }: ColumnProps): React.ReactNode => {
           <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
             {tasks.map(task => <Task key={task} id={task} />)}
           </SortableContext>
-          {bodyHover && !active && <NewTask />}
+          {bodyHover && !active && <NewTask columnId={id} />}
         </Stack>
       </Paper>
     </Stack>
