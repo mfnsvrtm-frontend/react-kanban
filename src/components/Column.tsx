@@ -4,21 +4,21 @@ import Task from './Task';
 import { Id } from '../types';
 import { useBoardContext } from './BoardContextProvider';
 import Overlay from './Overlay';
-import useHover from '../hooks/useHover';
+import useOverlay from '../hooks/useOverlay';
 import NewTask from './NewTask';
 import { useDndContext } from '@dnd-kit/core';
 
 interface ColumnProps {
   id: Id;
-  hover?: boolean;
+  overlay?: boolean
 }
 
-const Column = ({ id, hover = false }: ColumnProps): React.ReactNode => {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-  const { hasHover: titleHover, callbacks: titleHoverCallbacks } = useHover(hover);
-  const { hasHover: bodyHover, callbacks: bodyHoverCallbacks } = useHover();
-  const { getColumnTasks, getColumnData, deleteColumn } = useBoardContext();
+const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
   const { active } = useDndContext();
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
+  const { hasHover: titleHover, callbacks: titleHoverCallbacks } = useOverlay(overlay ? 'always-on' : active ? 'always-off' : 'hover');
+  const { hasHover: bodyHover, callbacks: bodyHoverCallbacks } = useOverlay();
+  const { getColumnTasks, getColumnData, deleteColumn } = useBoardContext();
 
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',

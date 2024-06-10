@@ -3,16 +3,18 @@ import { useSortable } from '@dnd-kit/sortable';
 import { Id } from '../types';
 import { useBoardContext } from './BoardContextProvider';
 import Overlay from './Overlay';
-import useHover from '../hooks/useHover';
+import useOverlay from '../hooks/useOverlay';
+import { useDndContext } from '@dnd-kit/core';
 
 interface TaskProps {
   id: Id;
-  hover?: boolean;
+  overlay?: boolean;
 };
 
-const Task = ({ id, hover = false }: TaskProps): React.ReactNode => {
+const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
+  const { active } = useDndContext();
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-  const { hasHover, callbacks: hoverCallbacks } = useHover(hover);
+  const { hasHover, callbacks: hoverCallbacks } = useOverlay(overlay ? 'always-on' : active ? 'always-off' : 'hover');
   const { getTaskData, deleteTask } = useBoardContext();
 
   const style = {

@@ -52,8 +52,8 @@ const Board = (): React.ReactNode => {
         <DragOverlay>
           {activeId
             ? isColumn(activeId)
-              ? <Column id={activeId} />
-              : <Task hover id={activeId} />
+              ? <Column overlay id={activeId} />
+              : <Task overlay id={activeId} />
             : null}
         </DragOverlay>
       </DndContext>
