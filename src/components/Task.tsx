@@ -25,8 +25,8 @@ const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
     data: { title, description },
     onSuccess: (data: FormData) => {
       editTask(id, {
-          title: data.get('title') as string,
-          description: data.get('description') as string
+        title: data.get('title') as string,
+        description: data.get('description') as string
       });
     }
   });
@@ -37,6 +37,8 @@ const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
     opacity: isDragging ? 0 : 1,
   };
 
+  const titleOnlyStyle = { '&&&': { paddingBottom: '8px' } };
+
   return (
     <Card
       ref={setNodeRef}
@@ -45,11 +47,13 @@ const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
       {...listeners}
       {...attributes}
     >
-      <CardContent sx={{ position: 'relative' }} {...hoverCallbacks}>
+      <CardContent sx={{ position: 'relative', ...(!description && titleOnlyStyle) }} {...hoverCallbacks}  >
         {hasHover && <Overlay onDelete={() => deleteTask(id)} onEdit={openEditDialog} />}
-        <Typography variant='body1' pb={1}>{title}</Typography>
-        <Divider />
-        <Typography variant='body2' pt={1}>{description}</Typography>
+        <Typography sx={{ overflowWrap: 'break-word' }} variant='body1' pb={1}>{title}</Typography>
+        {description && <>
+          <Divider />
+          <Typography sx={{ overflowWrap: 'break-word' }} variant='body2' pt={1}>{description}</Typography>
+        </>}
       </CardContent>
     </Card>
   );

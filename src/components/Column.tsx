@@ -45,7 +45,7 @@ const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
     <Stack width={300} gap={1.5} ref={setNodeRef} style={style}>
       <Paper variant='outlined' sx={{ position: 'relative', padding: 1.5, cursor: 'grab' }} {...attributes} {...listeners} {...titleHoverCallbacks}>
         {titleHover && <Overlay onDelete={() => deleteColumn(id)} onEdit={openEditDialog} />}
-        <Typography sx={{ userSelect: 'none' }} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
+        <Typography sx={{ userSelect: 'none', overflowWrap: 'break-word' }} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
       </Paper>
       <Paper variant='outlined' sx={{ padding: 1.5, minHeight: 200 }} {...bodyHoverCallbacks} >
         <Stack gap={1.5}>
