@@ -47,12 +47,12 @@ const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
         {titleHover && <Overlay onDelete={() => deleteColumn(id)} onEdit={openEditDialog} />}
         <Typography sx={{ userSelect: 'none', overflowWrap: 'break-word' }} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
       </Paper>
-      <Paper variant='outlined' sx={{ padding: 1.5, minHeight: 200 }} {...bodyHoverCallbacks} >
+      <Paper variant='outlined' sx={{ padding: 1.5 }} {...bodyHoverCallbacks} >
         <Stack gap={1.5}>
           <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
             {tasks.map(task => <Task key={task} id={task} />)}
           </SortableContext>
-          {bodyHover && !active && <NewTask columnId={id} />}
+          {(bodyHover && !active || tasks.length === 0) && <NewTask columnId={id} />}
         </Stack>
       </Paper>
     </Stack>
