@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Paper } from '@mui/material';
 import { DialogType } from './BoardDialog';
 import { Id } from '../types';
-import { useBoardContext } from './BoardContextProvider';
+import { useBoardContext } from '../providers/BoardContextProvider';
 import useDialog from '../hooks/useDialog';
 
 interface NewTaskProps {

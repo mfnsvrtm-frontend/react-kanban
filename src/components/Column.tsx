@@ -2,7 +2,7 @@ import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-
 import { Paper, Stack, Typography } from '@mui/material';
 import Task from './Task';
 import { Id } from '../types';
-import { useBoardContext } from './BoardContextProvider';
+import { useBoardContext } from '../providers/BoardContextProvider';
 import Overlay from './Overlay';
 import useOverlay from '../hooks/useOverlay';
 import NewTask from './NewTask';

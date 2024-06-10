@@ -1,8 +1,8 @@
 import { AppBar, Container, Stack, Toolbar, Typography } from '@mui/material';
 import Board from './components/Board';
-import { BoardContextProvider } from './components/BoardContextProvider';
+import { BoardContextProvider } from './providers/BoardContextProvider';
 import { useBoard } from './hooks/useBoard';
-import { DialogContextProvider } from './components/DialogContextProvider';
+import { DialogContextProvider } from './providers/DialogContextProvider';
 
 const App = (): React.ReactNode => {
   const boardContext = useBoard();

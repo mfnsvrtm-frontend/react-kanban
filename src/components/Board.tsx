@@ -5,7 +5,7 @@ import { DndContext, DragOverlay, useSensor, useSensors } from '@dnd-kit/core';
 import { useState } from 'react';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { MouseSensor } from '../utils/sensors';
-import { useBoardContext } from './BoardContextProvider';
+import { useBoardContext } from '../providers/BoardContextProvider';
 
 const Board = (): React.ReactNode => {
   const [activeId, setActiveId] = useState<string | null>(null);

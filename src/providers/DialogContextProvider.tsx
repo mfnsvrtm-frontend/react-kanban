@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { PropsWithChildren, createContext, useContext } from 'react';
-import { BoardDialog, DialogType } from './BoardDialog';
+import { BoardDialog, DialogType } from '../components/BoardDialog';
 
 type OpenDialogFn = (
   type: DialogType,
