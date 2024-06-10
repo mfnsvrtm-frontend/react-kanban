@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { PropsWithChildren, createContext, useContext } from 'react';
-import { TaskDialog, DialogType } from '../components/TaskDialog';
+import { BoardDialog, DialogType } from './BoardDialog';
 
 type OpenDialogFn = (
   type: DialogType,
@@ -50,7 +50,7 @@ export const DialogContextProvider = ({ children }: PropsWithChildren): React.Re
   return (
     <dialogContext.Provider value={open}>
       {children}
-      {isOpen && <TaskDialog {...dialogData} />}
+      {isOpen && <BoardDialog {...dialogData} />}
     </dialogContext.Provider>
   );
 };

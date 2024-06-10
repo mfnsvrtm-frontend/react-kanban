@@ -16,6 +16,7 @@ export interface BoardContext {
   deleteColumn: (id: Id) => void;
   addTask: (columnId: Id, data: TaskData) => void;
   editTask: (taskId: Id, data: TaskData) => void;
+  editColumn: (columnId: Id, data: ColumnData) => void;
 }
 
 export const useBoard = (): BoardContext => {
@@ -129,6 +130,13 @@ export const useBoard = (): BoardContext => {
     });
   }
 
+  const editColumn = (columnId: Id, data: ColumnData) => {
+    setColumnData({
+      ...columnData,
+      [columnId]: data
+    });
+  }
+
   return {
     columns,
     isColumn,
@@ -142,5 +150,6 @@ export const useBoard = (): BoardContext => {
     deleteColumn,
     addTask,
     editTask,
+    editColumn
   };
 };

@@ -3,16 +3,17 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 export const enum DialogType {
   AddTask,
   EditTask,
+  EditColumn,
 }
 
-export interface TaskDialogProps {
+export interface BoardDialogProps {
   type: DialogType;
   data: { [name: string]: string };
   onCancel: () => void;
   onSuccess: (data: FormData) => void;
 };
 
-export const TaskDialog = ({ type, data, onCancel, onSuccess }: TaskDialogProps): React.ReactNode => {
+export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProps): React.ReactNode => {
   let title: string;
   let submitLabel: string;
   let formContent;
@@ -24,6 +25,10 @@ export const TaskDialog = ({ type, data, onCancel, onSuccess }: TaskDialogProps)
       break;
     case DialogType.EditTask:
       title = 'Edit task';
+      submitLabel = 'Save';
+      break;
+    case DialogType.EditColumn:
+      title = 'Edit column';
       submitLabel = 'Save';
       break;
   }
@@ -45,6 +50,19 @@ export const TaskDialog = ({ type, data, onCancel, onSuccess }: TaskDialogProps)
           defaultValue={data.description}
           name="description"
           label="Description"
+          type="text"
+        />
+      </DialogContent>
+    );
+  } else {
+    formContent = (
+      <DialogContent>
+        <TextField
+          fullWidth
+          required
+          defaultValue={data.title}
+          name="title"
+          label="Title"
           type="text"
         />
       </DialogContent>

@@ -6,7 +6,7 @@ import Overlay from './Overlay';
 import useOverlay from '../hooks/useOverlay';
 import { useDndContext } from '@dnd-kit/core';
 import useDialog from '../hooks/useDialog';
-import { DialogType } from './TaskDialog';
+import { DialogType } from './BoardDialog';
 
 interface TaskProps {
   id: Id;

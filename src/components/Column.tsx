@@ -7,6 +7,8 @@ import Overlay from './Overlay';
 import useOverlay from '../hooks/useOverlay';
 import NewTask from './NewTask';
 import { useDndContext } from '@dnd-kit/core';
+import useDialog from '../hooks/useDialog';
+import { DialogType } from './BoardDialog';
 
 interface ColumnProps {
   id: Id;
@@ -18,7 +20,20 @@ const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
   const { hasHover: titleHover, callbacks: titleHoverCallbacks } = useOverlay(overlay ? 'always-on' : active ? 'always-off' : 'hover');
   const { hasHover: bodyHover, callbacks: bodyHoverCallbacks } = useOverlay();
-  const { getColumnTasks, getColumnData, deleteColumn } = useBoardContext();
+  const { getColumnTasks, getColumnData, deleteColumn, editColumn } = useBoardContext();
+
+  const tasks = getColumnTasks(id);
+  const { title } = getColumnData(id);
+
+  const openEditDialog = useDialog({
+    type: DialogType.EditColumn,
+    data: { title },
+    onSuccess: (data: FormData) => {
+      editColumn(id, {
+          title: data.get('title') as string,
+      });
+    }
+  });
 
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',
@@ -26,13 +41,10 @@ const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
     opacity: isDragging ? 0 : 1,
   };
 
-  const tasks = getColumnTasks(id);
-  const { title } = getColumnData(id);
-
   return (
     <Stack width={300} gap={1.5} ref={setNodeRef} style={style}>
       <Paper variant='outlined' sx={{ position: 'relative', padding: 1.5, cursor: 'grab' }} {...attributes} {...listeners} {...titleHoverCallbacks}>
-        {titleHover && <Overlay onDelete={() => deleteColumn(id)} onEdit={() => {}} />}
+        {titleHover && <Overlay onDelete={() => deleteColumn(id)} onEdit={openEditDialog} />}
         <Typography sx={{ userSelect: 'none' }} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
       </Paper>
       <Paper variant='outlined' sx={{ padding: 1.5, minHeight: 200 }} {...bodyHoverCallbacks} >
