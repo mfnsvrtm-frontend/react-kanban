@@ -9,7 +9,7 @@ interface DialogParams {
 }
 
 const useDialog = ({ type, data = {}, onCancel = noop, onSuccess }: DialogParams) => {
-  const open = useDialogContext();
+  const { open } = useDialogContext();
   return () => open(type, data, onCancel, onSuccess);
 };
 

@@ -9,9 +9,11 @@ import { BoardContextProvider } from '../providers/BoardContextProvider';
 import { useBoard } from '../hooks/useBoard';
 import NewColumn from './NewColumn';
 import useKeyboard from '../hooks/useKeyboard';
+import { useDialogContext } from '../providers/DialogContextProvider';
 
 const Board = (): React.ReactNode => {
   const isCtrlDown = useKeyboard((event) => event.key === 'Control');
+  const { isOpen: isDialogOpen } = useDialogContext();
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const context = useBoard();
@@ -51,7 +53,7 @@ const Board = (): React.ReactNode => {
         >
           <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
             {columns.map(column => <Column key={column} id={column} />)}
-            {isCtrlDown && <NewColumn />}
+            {isCtrlDown && !isDialogOpen && <NewColumn />}
           </SortableContext>
           <DragOverlay>
             {activeId

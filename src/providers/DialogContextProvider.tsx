@@ -9,9 +9,14 @@ type OpenDialogFn = (
   onSuccess: (data: FormData) => void
 ) => void;
 
-const dialogContext = createContext<OpenDialogFn | null>(null);
+interface DialogContext {
+  isOpen: boolean;
+  open: OpenDialogFn;
+}
 
-export const useDialogContext = (): OpenDialogFn => {
+const dialogContext = createContext<DialogContext | null>(null);
+
+export const useDialogContext = (): DialogContext => {
   const context = useContext(dialogContext);
 
   if (!context)
@@ -48,7 +53,7 @@ export const DialogContextProvider = ({ children }: PropsWithChildren): React.Re
   };
 
   return (
-    <dialogContext.Provider value={open}>
+    <dialogContext.Provider value={{ isOpen, open }}>
       {children}
       {isOpen && <BoardDialog {...dialogData} />}
     </dialogContext.Provider>

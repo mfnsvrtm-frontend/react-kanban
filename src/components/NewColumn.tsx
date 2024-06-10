@@ -13,7 +13,7 @@ const NewColumn = (): React.ReactNode => {
     ref.current?.scrollIntoView();
   }, [])
 
-  const openDialog = useDialog({
+  const openDialog= useDialog({
     type: DialogType.AddColumn,
     onSuccess: (data: FormData) => {
       addColumn({
