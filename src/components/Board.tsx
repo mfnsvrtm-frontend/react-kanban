@@ -5,14 +5,12 @@ import { DndContext, DragOverlay, useSensor, useSensors } from '@dnd-kit/core';
 import { useState } from 'react';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { MouseSensor } from '../utils/sensors';
-import { useBoard } from '../hooks/useBoard';
-import { BoardContextProvider } from './BoardContextProvider';
+import { useBoardContext } from './BoardContextProvider';
 
 const Board = (): React.ReactNode => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const context = useBoard();
-  const { columns, isColumn, getColumnById, moveTask, moveColumn } = context;
+  const { columns, isColumn, getColumnById, moveTask, moveColumn } = useBoardContext();
 
   const sensors = useSensors(
     useSensor(MouseSensor)
@@ -55,18 +53,16 @@ const Board = (): React.ReactNode => {
           }
         }}
       >
-        <BoardContextProvider context={context}>
-          <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
-            {columns.map(column => <Column key={column} id={column} />)}
-          </SortableContext>
-          <DragOverlay>
-            {activeId
-              ? isColumn(activeId)
-                ? <Column id={activeId} />
-                : <Task hover id={activeId} />
-              : null}
-          </DragOverlay>
-        </BoardContextProvider>
+        <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
+          {columns.map(column => <Column key={column} id={column} />)}
+        </SortableContext>
+        <DragOverlay>
+          {activeId
+            ? isColumn(activeId)
+              ? <Column id={activeId} />
+              : <Task hover id={activeId} />
+            : null}
+        </DragOverlay>
       </DndContext>
     </Stack >
   );

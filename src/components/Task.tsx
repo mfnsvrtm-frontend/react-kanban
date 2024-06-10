@@ -41,6 +41,4 @@ const Task = ({ id, hover = false }: TaskProps): React.ReactNode => {
   );
 };
 
-const noop = () => { };
-
 export default Task;

@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { Id } from '../types';
 
 export const enum DialogType {
@@ -14,7 +14,7 @@ interface TaskDialogProps {
   onSuccess: (data: FormData) => void;
 };
 
-const TaskDialog = ({ type, id, open, onCancel, onSuccess }: TaskDialogProps): React.ReactNode => {
+const TaskDialog = ({ type, open, onCancel, onSuccess }: TaskDialogProps): React.ReactNode => {
   let title: string;
   let submitLabel: string;
   let formContent;
