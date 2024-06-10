@@ -2,6 +2,7 @@ import { AppBar, Container, Stack, Toolbar, Typography } from '@mui/material';
 import Board from './components/Board';
 import { BoardContextProvider } from './components/BoardContextProvider';
 import { useBoard } from './hooks/useBoard';
+import { DialogContextProvider } from './components/DialogContextProvider';
 
 const App = (): React.ReactNode => {
   const boardContext = useBoard();
@@ -23,9 +24,11 @@ const App = (): React.ReactNode => {
         </Container>
       </AppBar>
       <Container sx={{ flexGrow: 1 }}>
-        <BoardContextProvider context={boardContext}>
-          <Board />
-        </BoardContextProvider>
+        <DialogContextProvider>
+          <BoardContextProvider context={boardContext}>
+            <Board />
+          </BoardContextProvider>
+        </DialogContextProvider>
       </Container>
     </Stack>
   );

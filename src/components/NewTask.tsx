@@ -1,9 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Paper } from '@mui/material';
-import TaskDialog, { DialogType } from './TaskDialog';
-import { useState } from 'react';
+import { DialogType } from './TaskDialog';
 import { Id } from '../types';
 import { useBoardContext } from './BoardContextProvider';
+import useDialog from '../hooks/useDialog';
 
 interface NewTaskProps {
   columnId: Id;
@@ -11,32 +11,27 @@ interface NewTaskProps {
 
 const NewTask = ({ columnId }: NewTaskProps): React.ReactNode => {
   const { addTask } = useBoardContext();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const handleSubmit = (data: FormData) => {
-    addTask(
-      columnId,
-      {
-        title: data.get('title') as string,
-        description: data.get('description') as string
-    });
-  }
+  const openDialog = useDialog({
+    type: DialogType.AddTask,
+    onSuccess: (data: FormData) => {
+      addTask(
+        columnId,
+        {
+          title: data.get('title') as string,
+          description: data.get('description') as string
+      })
+    }
+  });
 
   return (
     <>
       <Paper
         variant='outlined'
         sx={{ display: 'grid', placeContent: 'center', padding: 4, borderStyle: 'dashed', cursor: 'pointer' }}
-        onClick={(() => setIsDialogOpen(true))}
+        onClick={openDialog}
       >
         <AddIcon sx={{ color: 'divider' }} />
       </Paper>
-      <TaskDialog
-        type={DialogType.AddTask}
-        open={isDialogOpen}
-        onCancel={() => setIsDialogOpen(false)}
-        onSuccess={handleSubmit}
-      />
     </>
   );
 };

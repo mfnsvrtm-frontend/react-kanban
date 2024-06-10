@@ -1,20 +1,17 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { Id } from '../types';
 
 export const enum DialogType {
   AddTask,
   EditTask,
 }
 
-interface TaskDialogProps {
+export interface TaskDialogProps {
   type: DialogType;
-  id?: Id;
-  open: boolean;
   onCancel: () => void;
   onSuccess: (data: FormData) => void;
 };
 
-const TaskDialog = ({ type, open, onCancel, onSuccess }: TaskDialogProps): React.ReactNode => {
+export const TaskDialog = ({ type, onCancel, onSuccess }: TaskDialogProps): React.ReactNode => {
   let title: string;
   let submitLabel: string;
   let formContent;
@@ -53,7 +50,7 @@ const TaskDialog = ({ type, open, onCancel, onSuccess }: TaskDialogProps): React
 
   return (
     <Dialog
-      open={open}
+      open
       onClose={onCancel}
       PaperProps={{
         component: 'form',
@@ -73,5 +70,3 @@ const TaskDialog = ({ type, open, onCancel, onSuccess }: TaskDialogProps): React
     </Dialog>
   );
 };
-
-export default TaskDialog;
