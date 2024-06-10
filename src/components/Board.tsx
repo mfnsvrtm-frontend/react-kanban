@@ -29,18 +29,6 @@ const Board = (): React.ReactNode => {
           const activeColumn = getColumnById(activeId);
           const overColumn = getColumnById(overId);
 
-          if (!activeColumn || !overColumn) return;
-          moveTask(activeId, overId, activeColumn, overColumn);
-        }}
-        onDragStart={({ active }) => {
-          setActiveId(active.id as string);
-        }}
-        onDragEnd={({ over }) => {
-          setActiveId(null);
-
-          if (!over || !activeId) return;
-          const overId = over.id as string;
-
           if (isColumn(activeId)) {
             moveColumn(activeId, overId);
           } else {
@@ -50,6 +38,12 @@ const Board = (): React.ReactNode => {
             if (!activeColumn || !overColumn) return;
             moveTask(activeId, overId, activeColumn, overColumn);
           }
+        }}
+        onDragStart={({ active }) => {
+          setActiveId(active.id as string);
+        }}
+        onDragEnd={() => {
+          setActiveId(null);
         }}
       >
         <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
