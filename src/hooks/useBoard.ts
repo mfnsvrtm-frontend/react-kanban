@@ -55,7 +55,7 @@ export const useBoard = (): BoardContext => {
     const overColumn = toColumnId;
 
     const activeIndex = getItemIndex(id, activeColumn);
-    const overIndex = getItemIndex(to, overColumn);
+    const overIndex = (to === overColumn) ? board[to].length : getItemIndex(to, overColumn);
 
     if (activeColumn !== overColumn) {
       setBoard({
