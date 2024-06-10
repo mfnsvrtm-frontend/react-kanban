@@ -7,11 +7,12 @@ export const enum DialogType {
 
 export interface TaskDialogProps {
   type: DialogType;
+  data: { [name: string]: string };
   onCancel: () => void;
   onSuccess: (data: FormData) => void;
 };
 
-export const TaskDialog = ({ type, onCancel, onSuccess }: TaskDialogProps): React.ReactNode => {
+export const TaskDialog = ({ type, data, onCancel, onSuccess }: TaskDialogProps): React.ReactNode => {
   let title: string;
   let submitLabel: string;
   let formContent;
@@ -33,6 +34,7 @@ export const TaskDialog = ({ type, onCancel, onSuccess }: TaskDialogProps): Reac
         <TextField
           fullWidth
           required
+          defaultValue={data.title}
           name="title"
           label="Title"
           type="text"
@@ -40,6 +42,7 @@ export const TaskDialog = ({ type, onCancel, onSuccess }: TaskDialogProps): Reac
         <TextField
           fullWidth
           required
+          defaultValue={data.description}
           name="description"
           label="Description"
           type="text"

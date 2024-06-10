@@ -3,13 +3,14 @@ import { DialogType } from '../components/TaskDialog';
 
 interface DialogParams {
   type: DialogType;
+  data?: { [name: string]: string }
   onCancel?: () => void;
   onSuccess: (data: FormData) => void;
 }
 
-const useDialog = ({ type, onCancel = noop, onSuccess }: DialogParams) => {
+const useDialog = ({ type, data = {}, onCancel = noop, onSuccess }: DialogParams) => {
   const open = useDialogContext();
-  return () => open(type, onCancel, onSuccess);
+  return () => open(type, data, onCancel, onSuccess);
 };
 
 const noop = () => {}

@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { PropsWithChildren, createContext, useContext } from 'react';
 import { TaskDialog, DialogType } from '../components/TaskDialog';
 
-type OpenDialogFn = (type: DialogType, onCancel: () => void, onSuccess: (data: FormData) => void) => void;
+type OpenDialogFn = (
+  type: DialogType,
+  data: { [name: string]: string },
+  onCancel: () => void,
+  onSuccess: (data: FormData) => void
+) => void;
 
 const dialogContext = createContext<OpenDialogFn | null>(null);
 
@@ -17,6 +22,7 @@ export const useDialogContext = (): OpenDialogFn => {
 
 interface DialogData {
   type: DialogType;
+  data: { [name: string]: string }
   onCancel: () => void;
   onSuccess: (data: FormData) => void;
 }
@@ -25,14 +31,18 @@ export const DialogContextProvider = ({ children }: PropsWithChildren): React.Re
   const [dialogData, setDialogData] = useState<DialogData>(null!);
   const [isOpen, setIsOpen] = useState(false);
 
-  const open: OpenDialogFn = (type, onCancel, onSuccess) => {
+  const open: OpenDialogFn = (type, data, onCancel, onSuccess) => {
     setIsOpen(true);
     setDialogData({
       type,
-      onCancel,
+      data,
+      onCancel: () => {
+        onCancel();
+        setIsOpen(false);
+      },
       onSuccess: (data) => {
         onSuccess(data);
-        setIsOpen(false)
+        setIsOpen(false);
       }
     });
   };
