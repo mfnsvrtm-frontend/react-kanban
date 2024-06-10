@@ -3,12 +3,13 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 export const enum DialogType {
   AddTask,
   EditTask,
+  AddColumn,
   EditColumn,
 }
 
 export interface BoardDialogProps {
   type: DialogType;
-  data: { [name: string]: string };
+  data: { [name: string]: string; };
   onCancel: () => void;
   onSuccess: (data: FormData) => void;
 };
@@ -30,6 +31,10 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
     case DialogType.EditColumn:
       title = 'Edit column';
       submitLabel = 'Save';
+      break;
+    case DialogType.AddColumn:
+      title = 'Add column';
+      submitLabel = 'Add';
       break;
   }
 
@@ -54,7 +59,7 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
         />
       </DialogContent>
     );
-  } else {
+  } else if ([DialogType.AddColumn, DialogType.EditColumn].includes(type)) {
     formContent = (
       <DialogContent>
         <TextField

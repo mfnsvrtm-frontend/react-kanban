@@ -16,6 +16,7 @@ export interface BoardContext {
   deleteColumn: (id: Id) => void;
   addTask: (columnId: Id, data: TaskData) => void;
   editTask: (taskId: Id, data: TaskData) => void;
+  addColumn: (data: ColumnData) => void;
   editColumn: (columnId: Id, data: ColumnData) => void;
 }
 
@@ -87,14 +88,14 @@ export const useBoard = (): BoardContext => {
       ...board,
       [columnId]: board[columnId].filter(task => task !== id)
     });
-    
+
     const { [id]: _, ...newData } = taskData;
-    setTaskData(newData); 
-  }
+    setTaskData(newData);
+  };
 
   const deleteColumn = (id: Id) => {
     setColumns(columns.filter(column => column !== id));
-    
+
     const { [id]: _1, ...newColumnData } = columnData;
     setColumnData(newColumnData);
 
@@ -104,10 +105,10 @@ export const useBoard = (): BoardContext => {
     const columnTasks = board[id];
     const newTaskData = Object.fromEntries(
       Object.entries(taskData)
-      .filter(([task]) => !columnTasks.includes(task))
+        .filter(([task]) => !columnTasks.includes(task))
     );
     setTaskData(newTaskData);
-  }
+  };
 
   const addTask = (columnId: Id, data: TaskData) => {
     const id = nanoid();
@@ -121,21 +122,35 @@ export const useBoard = (): BoardContext => {
       ...taskData,
       [id]: data
     });
-  }
+  };
 
   const editTask = (taskId: Id, data: TaskData) => {
     setTaskData({
       ...taskData,
       [taskId]: data
     });
-  }
+  };
+
+  const addColumn = (data: ColumnData) => {
+    console.log('adding')
+    const id = nanoid();
+    setColumns([...columns, id]);
+    setColumnData({
+      ...columnData,
+      [id]: data
+    });
+    setBoard({
+      ...board,
+      [id]: []
+    });
+  };
 
   const editColumn = (columnId: Id, data: ColumnData) => {
     setColumnData({
       ...columnData,
       [columnId]: data
     });
-  }
+  };
 
   return {
     columns,
@@ -150,6 +165,7 @@ export const useBoard = (): BoardContext => {
     deleteColumn,
     addTask,
     editTask,
+    addColumn,
     editColumn
   };
 };
