@@ -42,8 +42,10 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
     formContent = (
       <DialogContent>
         <TextField
+          autoFocus
           fullWidth
           required
+          margin='normal'
           defaultValue={data.title}
           name="title"
           label="Title"
@@ -51,7 +53,7 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
         />
         <TextField
           fullWidth
-          required
+          margin='normal'
           defaultValue={data.description}
           name="description"
           label="Description"
@@ -63,8 +65,10 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
     formContent = (
       <DialogContent>
         <TextField
+          autoFocus
           fullWidth
           required
+          margin='dense'
           defaultValue={data.title}
           name="title"
           label="Title"
