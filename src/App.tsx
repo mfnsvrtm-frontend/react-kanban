@@ -1,4 +1,4 @@
-import { AppBar, Container, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
 import Board from './components/Board';
 import { DialogContextProvider } from './providers/DialogContextProvider';
 import CursorOverrideProvider from './providers/CursorOverrideProvider';
@@ -6,9 +6,9 @@ import CursorOverrideProvider from './providers/CursorOverrideProvider';
 const App = (): React.ReactNode => {
 
   return (
-    <Stack height={'100vh'}>
+    <Box height={'100vh'}>
       <AppBar
-        position='relative'
+        position='fixed'
         sx={{ bgcolor: 'primary.dark' }}
       >
         <Container>
@@ -21,16 +21,14 @@ const App = (): React.ReactNode => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Container sx={{
-        flexGrow: 1,
-      }}>
+      <Box sx={{ pt: 8, display: 'inline-grid', gridTemplateColumns: 'minmax(300px, 1fr) auto minmax(300px, 1fr)' }}>
         <DialogContextProvider>
           <CursorOverrideProvider>
-            <Board />
+            <Board sx={{ gridColumn: 2 }} />
           </CursorOverrideProvider>
         </DialogContextProvider>
-      </Container>
-    </Stack>
+      </Box>
+    </Box>
   );
 };
 

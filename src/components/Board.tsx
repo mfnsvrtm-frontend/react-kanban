@@ -11,8 +11,13 @@ import NewColumn from './NewColumn';
 import useKeyboard from '../hooks/useKeyboard';
 import { useDialogContext } from '../providers/DialogContextProvider';
 import InfoCard from './InfoCard';
+import { SxProps } from '@mui/system';
 
-const Board = (): React.ReactNode => {
+interface BoardProps {
+  sx?: SxProps;
+}
+
+const Board = ({ sx }: BoardProps): React.ReactNode => {
   const isCtrlDown = useKeyboard((event) => event.key === 'Control');
   const { isOpen: isDialogOpen } = useDialogContext();
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -39,7 +44,7 @@ const Board = (): React.ReactNode => {
     <>
       <InfoCard />
       <BoardContextProvider context={context}>
-        <Stack direction='row' gap={2} height={1} paddingBlock={2} sx={{ height: 'fit-content', width: 'fit-content', marginInline: 'auto' }}>
+        <Stack direction='row' gap={2} paddingBlock={2} sx={{ height: 'fit-content', ...sx }}>
           <DndContext
             sensors={sensors}
             collisionDetection={collisionDetectionStrategy}
