@@ -3,20 +3,17 @@ import { useSortable } from '@dnd-kit/sortable';
 import { Id } from '../types';
 import { useBoardContext } from '../providers/BoardContextProvider';
 import Overlay from './Overlay';
-import useOverlay from '../hooks/useOverlay';
-import { useDndContext } from '@dnd-kit/core';
+import useHover from '../hooks/useHover';
 import useDialog from '../hooks/useDialog';
 import { DialogType } from './BoardDialog';
 
 interface TaskProps {
   id: Id;
-  overlay?: boolean;
 };
 
-const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
-  const { active } = useDndContext();
+const Task = ({ id }: TaskProps): React.ReactNode => {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-  const { hasHover, callbacks: hoverCallbacks } = useOverlay(overlay ? 'always-on' : active ? 'always-off' : 'hover');
+  const { hasHover, callbacks: hoverCallbacks } = useHover(id);
   const { getTaskData, deleteTask, editTask } = useBoardContext();
 
   const { title, description } = getTaskData(id);
@@ -36,7 +33,6 @@ const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
     transition,
     opacity: isDragging ? 0.1 : 1,
   };
-
   const titleOnlyStyle = { '&&&': { paddingBottom: '8px' } };
 
   return (
@@ -47,7 +43,7 @@ const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
       {...listeners}
       {...attributes}
     >
-      <CardContent sx={{ position: 'relative', ...(!description && titleOnlyStyle) }} {...hoverCallbacks}  >
+      <CardContent sx={{ position: 'relative', cursor: 'grab', ...(!description && titleOnlyStyle) }} {...hoverCallbacks}  >
         {hasHover && <Overlay onDelete={() => deleteTask(id)} onEdit={openEditDialog} />}
         <Typography sx={{ overflowWrap: 'break-word' }} variant='body1' pb={1}>{title}</Typography>
         {description && <>

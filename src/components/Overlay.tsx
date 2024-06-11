@@ -20,7 +20,6 @@ const Overlay = ({ onEdit, onDelete }: OverlayProps): React.ReactNode => {
         justifyContent: 'center',
         alignItems: 'center',
         backdropFilter: 'blur(5px)',
-        cursor: 'grab'
       }}
     >
       <IconButton data-no-dnd size='large' color='warning' onClick={onDelete}>

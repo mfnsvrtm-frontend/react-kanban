@@ -4,7 +4,7 @@ import Task from './Task';
 import { Id } from '../types';
 import { useBoardContext } from '../providers/BoardContextProvider';
 import Overlay from './Overlay';
-import useOverlay from '../hooks/useOverlay';
+import useHover from '../hooks/useHover';
 import NewTask from './NewTask';
 import { useDndContext } from '@dnd-kit/core';
 import useDialog from '../hooks/useDialog';
@@ -12,14 +12,13 @@ import { DialogType } from './BoardDialog';
 
 interface ColumnProps {
   id: Id;
-  overlay?: boolean
 }
 
-const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
+const Column = ({ id }: ColumnProps): React.ReactNode => {
   const { active } = useDndContext();
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id });
-  const { hasHover: titleHover, callbacks: titleHoverCallbacks } = useOverlay(overlay ? 'always-on' : active ? 'always-off' : 'hover');
-  const { hasHover: bodyHover, callbacks: bodyHoverCallbacks } = useOverlay();
+  const { hasHover: titleHover, callbacks: titleHoverCallbacks } = useHover(id);
+  const { hasHover: bodyHover, callbacks: bodyHoverCallbacks } = useHover();
   const { getColumnTasks, getColumnData, deleteColumn, editColumn } = useBoardContext();
 
   const tasks = getColumnTasks(id);

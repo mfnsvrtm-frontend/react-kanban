@@ -22,9 +22,7 @@ const Board = (): React.ReactNode => {
   const sensors = useSensors(
     useSensor(MouseSensor)
   );
-
-  console.log(columns);
-
+  
   const collisionDetectionStrategy: CollisionDetection = (args) => {
     if (activeId && isColumn(activeId)) {
       return closestCenter({
@@ -70,8 +68,8 @@ const Board = (): React.ReactNode => {
           <DragOverlay>
             {activeId
               ? isColumn(activeId)
-                ? <Column overlay id={activeId} />
-                : <Task overlay id={activeId} />
+                ? <Column id={activeId} />
+                : <Task id={activeId} />
               : null}
           </DragOverlay>
         </DndContext>
