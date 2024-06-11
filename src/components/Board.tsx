@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import Column from './Column';
 import Task from './Task';
-import { DndContext, DragOverlay, useSensor, useSensors } from '@dnd-kit/core';
+import { CollisionDetection, DndContext, DragOverlay, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import { useState } from 'react';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { MouseSensor } from '../utils/sensors';
@@ -23,15 +23,27 @@ const Board = (): React.ReactNode => {
     useSensor(MouseSensor)
   );
 
+  console.log(columns);
+
+  const collisionDetectionStrategy: CollisionDetection = (args) => {
+    if (activeId && isColumn(activeId)) {
+      return closestCenter({
+        ...args,
+        droppableContainers: args.droppableContainers.filter(container => columns.includes(container.id as string))
+      })
+    }
+
+    return closestCenter(args);
+  }
+
   return (
     <BoardContextProvider context={context}>
       <Stack direction='row' gap={2} height={1} paddingBlock={2} sx={{ height: 'fit-content', width: 'fit-content', marginInline: 'auto' }}>
         <DndContext
           sensors={sensors}
+          collisionDetection={collisionDetectionStrategy}
           onDragOver={({ over }) => {
             if (!over || !activeId) return;
-            if (isColumn(activeId)) return;
-
             const overId = over.id as string;
 
             if (isColumn(activeId)) {

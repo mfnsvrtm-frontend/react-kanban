@@ -132,7 +132,6 @@ export const useBoard = (): BoardContext => {
   };
 
   const addColumn = (data: ColumnData) => {
-    console.log('adding')
     const id = nanoid();
     setColumns([...columns, id]);
     setColumnData({
