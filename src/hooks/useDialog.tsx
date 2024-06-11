@@ -3,7 +3,7 @@ import { DialogType } from '../components/BoardDialog';
 
 interface DialogParams {
   type: DialogType;
-  data?: { [name: string]: string }
+  data?: { [name: string]: string; };
   onCancel?: () => void;
   onSuccess: (data: FormData) => void;
 }
@@ -13,6 +13,6 @@ const useDialog = ({ type, data = {}, onCancel = noop, onSuccess }: DialogParams
   return () => open(type, data, onCancel, onSuccess);
 };
 
-const noop = () => {}
+const noop = () => { };
 
 export default useDialog;

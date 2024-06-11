@@ -4,7 +4,7 @@ import { BoardDialog, DialogType } from '../components/BoardDialog';
 
 type OpenDialogFn = (
   type: DialogType,
-  data: { [name: string]: string },
+  data: { [name: string]: string; },
   onCancel: () => void,
   onSuccess: (data: FormData) => void
 ) => void;
@@ -27,7 +27,7 @@ export const useDialogContext = (): DialogContext => {
 
 interface DialogData {
   type: DialogType;
-  data: { [name: string]: string }
+  data: { [name: string]: string; };
   onCancel: () => void;
   onSuccess: (data: FormData) => void;
 }

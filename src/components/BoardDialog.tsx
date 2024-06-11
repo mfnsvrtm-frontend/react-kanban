@@ -47,17 +47,17 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
           required
           margin='normal'
           defaultValue={data.title}
-          name="title"
-          label="Title"
-          type="text"
+          name='title'
+          label='Title'
+          type='text'
         />
         <TextField
           fullWidth
           margin='normal'
           defaultValue={data.description}
-          name="description"
-          label="Description"
-          type="text"
+          name='description'
+          label='Description'
+          type='text'
         />
       </DialogContent>
     );
@@ -70,9 +70,9 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
           required
           margin='dense'
           defaultValue={data.title}
-          name="title"
-          label="Title"
-          type="text"
+          name='title'
+          label='Title'
+          type='text'
         />
       </DialogContent>
     );
@@ -95,7 +95,7 @@ export const BoardDialog = ({ type, data, onCancel, onSuccess }: BoardDialogProp
       {formContent}
       <DialogActions>
         <Button onClick={onCancel}>Cancel</Button>
-        <Button type="submit">{submitLabel}</Button>
+        <Button type='submit'>{submitLabel}</Button>
       </DialogActions>
     </Dialog>
   );

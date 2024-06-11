@@ -6,20 +6,20 @@ const useKeyboard = (predicate: (event: KeyboardEvent) => boolean) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (predicate(event)) setKeyDownEvent(event);
-    }
+    };
     const handleKeyUp = (event: KeyboardEvent) => {
       if (predicate(event)) setKeyDownEvent(null);
-    }
+    };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
     () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.addEventListener('keyup', handleKeyUp);
-    }
-  }, [])
+    };
+  }, []);
 
   return keyDownEvent;
-}
+};
 
 export default useKeyboard;

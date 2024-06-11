@@ -36,13 +36,7 @@ const Task = ({ id }: TaskProps): React.ReactNode => {
   const titleOnlyStyle = { '&&&': { paddingBottom: '8px' } };
 
   return (
-    <Card
-      ref={setNodeRef}
-      variant='outlined'
-      style={style}
-      {...listeners}
-      {...attributes}
-    >
+    <Card ref={setNodeRef} variant='outlined' style={style} {...listeners} {...attributes}>
       <CardContent sx={{ position: 'relative', cursor: 'grab', ...(!description && titleOnlyStyle) }} {...hoverCallbacks}  >
         {hasHover && <Overlay onDelete={() => deleteTask(id)} onEdit={openEditDialog} />}
         <Typography sx={{ overflowWrap: 'break-word' }} variant='body1' pb={1}>{title}</Typography>

@@ -15,7 +15,7 @@ const useHover = (id?: Id) => {
     else
       clear();
     return clear;
-  }, [active === null])
+  }, [active === null]);
 
   let onMouseEnter;
   let onMouseLeave;
@@ -31,9 +31,9 @@ const useHover = (id?: Id) => {
     hasHover,
     callbacks: {
       onMouseEnter,
-      onMouseLeave 
+      onMouseLeave
     }
   };
-}
+};
 
 export default useHover;

@@ -33,7 +33,9 @@ const Board = ({ sx }: BoardProps): React.ReactNode => {
     if (activeId && isColumn(activeId)) {
       return closestCenter({
         ...args,
-        droppableContainers: args.droppableContainers.filter(container => columns.includes(container.id as string))
+        droppableContainers:
+          args.droppableContainers
+            .filter(container => columns.includes(container.id as string))
       });
     }
 

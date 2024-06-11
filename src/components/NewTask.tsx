@@ -5,7 +5,7 @@ import { Id } from '../types';
 import { useBoardContext } from '../providers/BoardContextProvider';
 import useDialog from '../hooks/useDialog';
 import { useEffect, useRef } from 'react';
-import { useMousePredicate } from '../hooks/useMousePosition';
+import useMousePredicate from '../hooks/useMousePosition';
 
 const scrollThreshold = 200;
 
@@ -26,19 +26,19 @@ const NewTask = ({ columnId }: NewTaskProps): React.ReactNode => {
         {
           title: data.get('title') as string,
           description: data.get('description') as string
-      })
+        });
     }
   });
-  
+
   useEffect(() => {
     const documentHeight = document.documentElement.scrollHeight;
     const innerHeight = window.innerHeight;
-    const scrollTop = document.documentElement.scrollTop
+    const scrollTop = document.documentElement.scrollTop;
     const scrollLowEnough = documentHeight - innerHeight - scrollTop < scrollThreshold;
 
     if (mouseLowEnough && scrollLowEnough)
       scrollRef.current?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'center' });
-  }, [mouseLowEnough])
+  }, [mouseLowEnough]);
 
   return (
     <>

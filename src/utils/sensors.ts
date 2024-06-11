@@ -3,7 +3,7 @@
 import { MouseSensor as LibMouseSensor} from '@dnd-kit/core';
 import { MouseEvent } from 'react';
 
-// Block DnD event propagation if element have "data-no-dnd" attribute
+// Block DnD event propagation if element have 'data-no-dnd' attribute
 const handler = ({ nativeEvent: event }: MouseEvent) => {
     let cur = event.target as HTMLElement;
 

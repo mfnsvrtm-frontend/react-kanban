@@ -29,18 +29,18 @@ export const CursorOverrideProvider = ({ children }: PropsWithChildren): React.R
     () => {
       document.adoptedStyleSheets =
         document.adoptedStyleSheets
-        .filter(sheet => sheet != styleSheet.current);
-    }
-  }, [])
+          .filter(sheet => sheet != styleSheet.current);
+    };
+  }, []);
 
   const override = () => {
     if (styleSheet.current.cssRules.length === 0)
       styleSheet.current.insertRule(overrideRule);
-  }
+  };
   const clear = () => {
     if (styleSheet.current.cssRules.length === 1)
       styleSheet.current.deleteRule(0);
-  }
+  };
 
   return (
     <globalStyleContext.Provider value={{ override, clear }} >
