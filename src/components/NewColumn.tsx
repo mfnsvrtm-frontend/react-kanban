@@ -23,7 +23,7 @@ const NewColumn = (): React.ReactNode => {
   });
 
   return (
-    <Stack onClick={openDialog} width={300} gap={1.5} sx={{ cursor: 'pointer' }} >
+    <Stack onClick={openDialog} height='calc(100vh - 100px)' width={300} gap={1.5} sx={{ cursor: 'pointer' }} >
       <Paper ref={scrollRef} variant='outlined' sx={{ padding: 1.5, borderStyle: 'dashed' }}>
         <Typography sx={{ color: 'divider', userSelect: 'none' }} fontSize={16} fontWeight={400} textAlign='center'>New column</Typography>
       </Paper>
