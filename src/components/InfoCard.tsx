@@ -22,7 +22,7 @@ const InfoCard = (): React.ReactNode => {
     <Card sx={{ position: 'fixed', bottom: 15, right: 15, width: 300 }}>
       <CardContent sx={{ pb: 0 }}>
         <Typography variant="body2" color="text.secondary">
-          Hold down <kbd style={kbdStyle} >Ctrl</kbd> in order to create a new column.
+          Hold down <kbd style={kbdStyle} >Ctrl</kbd> to create a new column.
         </Typography>
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: 'end' }} >

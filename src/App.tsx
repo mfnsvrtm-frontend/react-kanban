@@ -16,7 +16,7 @@ const App = (): React.ReactNode => {
             sx={{ placeContent: 'center' }}
           >
             <Typography variant='h5' >
-              Kanban Board
+              Kanban Inspired
             </Typography>
           </Toolbar>
         </Container>
