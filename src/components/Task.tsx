@@ -34,7 +34,7 @@ const Task = ({ id, overlay = false }: TaskProps): React.ReactNode => {
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',
     transition,
-    opacity: isDragging ? 0 : 1,
+    opacity: isDragging ? 0.1 : 1,
   };
 
   const titleOnlyStyle = { '&&&': { paddingBottom: '8px' } };

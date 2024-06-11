@@ -38,7 +38,7 @@ const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',
     transition,
-    opacity: isDragging ? 0 : 1,
+    opacity: isDragging ? 0.1 : 1,
   };
 
   return (
@@ -48,7 +48,7 @@ const Column = ({ id, overlay = false }: ColumnProps): React.ReactNode => {
         <Typography sx={{ userSelect: 'none', overflowWrap: 'break-word' }} fontSize={16} fontWeight={400} textAlign='center'>{title}</Typography>
       </Paper>
       <Paper variant='outlined' sx={{ padding: 1.5 }} {...bodyHoverCallbacks} >
-        <Stack gap={1.5} >
+        <Stack gap={1.5}>
           <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
             {tasks.map(task => <Task key={task} id={task} />)}
           </SortableContext>
