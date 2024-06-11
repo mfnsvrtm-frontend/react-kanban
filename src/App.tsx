@@ -1,6 +1,7 @@
 import { AppBar, Container, Stack, Toolbar, Typography } from '@mui/material';
 import Board from './components/Board';
 import { DialogContextProvider } from './providers/DialogContextProvider';
+import CursorOverrideProvider from './providers/CursorOverrideProvider';
 
 const App = (): React.ReactNode => {
 
@@ -24,7 +25,9 @@ const App = (): React.ReactNode => {
         flexGrow: 1,
       }}>
         <DialogContextProvider>
-          <Board />
+          <CursorOverrideProvider>
+            <Board />
+          </CursorOverrideProvider>
         </DialogContextProvider>
       </Container>
     </Stack>

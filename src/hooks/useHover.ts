@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Id } from '../types';
 import { useDndContext } from '@dnd-kit/core';
-
-export type OverlayOverride = 'always-on' | 'always-off' | 'hover';
+import { useCursorOverride } from '../providers/CursorOverrideProvider';
 
 const useHover = (id?: Id) => {
   const { active } = useDndContext();
   const [hasHover, setHasHover] = useState(false);
-  const styleSheet = useRef<CSSStyleSheet | null>(null);
-
-  useEffect(() => {
-    styleSheet.current = new CSSStyleSheet();
-  }, [])
+  const { override, clear } = useCursorOverride();
 
   useEffect(() => {
     setHasHover(false);
-  }, [active])
+    if (active)
+      override();
+    else
+      clear();
+    return clear;
+  }, [active === null])
 
   let onMouseEnter;
   let onMouseLeave;
@@ -35,7 +35,5 @@ const useHover = (id?: Id) => {
     }
   };
 }
-
-const noop = () => { };
 
 export default useHover;
