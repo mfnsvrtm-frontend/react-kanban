@@ -7,10 +7,10 @@ import { useBoardContext } from '../providers/BoardContextProvider';
 
 const NewColumn = (): React.ReactNode => {
   const { addColumn } = useBoardContext();
-  const ref = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    ref.current?.scrollIntoView();
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'center' });
   }, [])
 
   const openDialog= useDialog({
@@ -23,8 +23,8 @@ const NewColumn = (): React.ReactNode => {
   });
 
   return (
-    <Stack ref={ref} onClick={openDialog} width={300} gap={1.5} sx={{ cursor: 'pointer' }} >
-      <Paper variant='outlined' sx={{ padding: 1.5, borderStyle: 'dashed' }}>
+    <Stack onClick={openDialog} width={300} gap={1.5} sx={{ cursor: 'pointer' }} >
+      <Paper ref={scrollRef} variant='outlined' sx={{ padding: 1.5, borderStyle: 'dashed' }}>
         <Typography sx={{ color: 'divider', userSelect: 'none' }} fontSize={16} fontWeight={400} textAlign='center'>New column</Typography>
       </Paper>
       <Paper  variant='outlined' sx={{ display: 'grid', placeContent: 'center', padding: 1.5, height: 1, borderStyle: 'dashed' }} >
