@@ -21,7 +21,7 @@ const App = (): React.ReactNode => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Box sx={{ pt: 8, display: 'inline-grid', gridTemplateColumns: 'minmax(300px, 1fr) auto minmax(300px, 1fr)' }}>
+      <Box sx={{ pt: 8, minWidth: '100vw', display: 'inline-grid', gridTemplateColumns: 'minmax(300px, 1fr) auto minmax(300px, 1fr)' }}>
         <DialogContextProvider>
           <CursorOverrideProvider>
             <Board sx={{ gridColumn: 2 }} />
