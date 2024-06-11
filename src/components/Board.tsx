@@ -66,7 +66,7 @@ const Board = (): React.ReactNode => {
           >
             <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
               {columns.map(column => <Column key={column} id={column} />)}
-              {isCtrlDown && !isDialogOpen && <NewColumn />}
+              {isCtrlDown && !isDialogOpen && activeId === null && <NewColumn />}
             </SortableContext>
             <DragOverlay>
               {activeId
