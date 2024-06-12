@@ -19,13 +19,14 @@ const Overlay = ({ onEdit, onDelete }: OverlayProps): React.ReactNode => {
         inset: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        backdropFilter: 'blur(5px)',
+        backdropFilter: 'blur(30px)',
+        backgroundColor: 'rgba(0, 0, 0, 0.01)'
       }}
     >
       <IconButton data-no-dnd size='large' color='warning' onClick={onDelete}>
         <DeleteIcon />
       </IconButton>
-      <IconButton data-no-dnd size='large' color='primary' onClick={onEdit}>
+      <IconButton data-no-dnd size='large' color='inherit' onClick={onEdit}>
         <EditIcon />
       </IconButton>
     </Stack>

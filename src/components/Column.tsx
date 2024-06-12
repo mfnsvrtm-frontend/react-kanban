@@ -37,7 +37,7 @@ const Column = ({ id }: ColumnProps): React.ReactNode => {
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : '',
     transition,
-    opacity: isDragging ? 0.1 : 1,
+    opacity: isDragging ? 0.2 : 1,
   };
 
   return (
@@ -54,8 +54,7 @@ const Column = ({ id }: ColumnProps): React.ReactNode => {
         )}
         <Typography
           sx={{ userSelect: 'none', overflowWrap: 'break-word' }}
-          fontSize={16}
-          fontWeight={400}
+          variant='h2'
           textAlign='center'
         >
           {title}

@@ -7,10 +7,10 @@ const App = (): React.ReactNode => {
 
   return (
     <Box height={'100vh'}>
-      <AppBar position='fixed' sx={{ bgcolor: 'primary.dark' }}>
+      <AppBar>
         <Container>
           <Toolbar sx={{ placeContent: 'center' }}>
-            <Typography variant='h5' >
+            <Typography variant='h1' >
               Kanban Inspired
             </Typography>
           </Toolbar>

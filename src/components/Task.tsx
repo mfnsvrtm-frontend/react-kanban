@@ -31,7 +31,7 @@ const Task = ({ id }: TaskProps): React.ReactNode => {
   const style = {
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : '',
     transition,
-    opacity: isDragging ? 0.1 : 1,
+    opacity: isDragging ? 0.2 : 1,
   };
   const titleOnlyStyle = { '&&&': { paddingBottom: '8px' } };
 
@@ -39,10 +39,10 @@ const Task = ({ id }: TaskProps): React.ReactNode => {
     <Card ref={setNodeRef} variant='outlined' style={style} {...listeners} {...attributes}>
       <CardContent sx={{ position: 'relative', cursor: 'grab', ...(!description && titleOnlyStyle) }} {...hoverCallbacks}  >
         {hasHover && <Overlay onDelete={() => deleteTask(id)} onEdit={openEditDialog} />}
-        <Typography sx={{ overflowWrap: 'break-word' }} variant='body1' pb={1}>{title}</Typography>
+        <Typography sx={{ overflowWrap: 'break-word' }} variant='h3' pb={1}>{title}</Typography>
         {description && <>
           <Divider />
-          <Typography sx={{ overflowWrap: 'break-word' }} variant='body2' pt={1}>{description}</Typography>
+          <Typography sx={{ overflowWrap: 'break-word' }} variant='body1' pt={1}>{description}</Typography>
         </>}
       </CardContent>
     </Card>
