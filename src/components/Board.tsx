@@ -5,13 +5,11 @@ import { CollisionDetection, DndContext, DragOverlay, closestCenter, useSensor, 
 import { useState } from 'react';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { MouseSensor } from '../utils/sensors';
-import { BoardContextProvider } from '../providers/BoardContextProvider';
-import { useBoard } from '../hooks/useBoard';
 import NewColumn from './NewColumn';
 import useKeyboard from '../hooks/useKeyboard';
 import { useDialogContext } from '../providers/DialogContextProvider';
-import InfoCard from './InfoCard';
 import { SxProps } from '@mui/system';
+import { useBoardContext } from '../providers/BoardContextProvider';
 
 interface BoardProps {
   sx?: SxProps;
@@ -22,8 +20,7 @@ const Board = ({ sx }: BoardProps): React.ReactNode => {
   const { isOpen: isDialogOpen } = useDialogContext();
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  const context = useBoard();
-  const { columns, isColumn, getColumnById, moveTask, moveColumn } = context;
+  const { columns, isColumn, getColumnById, moveTask, moveColumn } = useBoardContext();
 
   const sensors = useSensors(
     useSensor(MouseSensor)
@@ -44,47 +41,44 @@ const Board = ({ sx }: BoardProps): React.ReactNode => {
 
   return (
     <>
-      <InfoCard />
-      <BoardContextProvider context={context}>
-        <Stack direction='row' gap={2} paddingBlock={2} sx={{ height: 'fit-content', ...sx }}>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={collisionDetectionStrategy}
-            onDragOver={({ over }) => {
-              if (!over || !activeId) return;
-              const overId = over.id as string;
+      <Stack direction='row' gap={2} paddingBlock={2} sx={{ height: 'fit-content', ...sx }}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={collisionDetectionStrategy}
+          onDragOver={({ over }) => {
+            if (!over || !activeId) return;
+            const overId = over.id as string;
 
-              if (isColumn(activeId)) {
-                moveColumn(activeId, overId);
-              } else {
-                const activeColumn = getColumnById(activeId);
-                const overColumn = getColumnById(overId);
+            if (isColumn(activeId)) {
+              moveColumn(activeId, overId);
+            } else {
+              const activeColumn = getColumnById(activeId);
+              const overColumn = getColumnById(overId);
 
-                if (!activeColumn || !overColumn) return;
-                moveTask(activeId, overId, activeColumn, overColumn);
-              }
-            }}
-            onDragStart={({ active }) => {
-              setActiveId(active.id as string);
-            }}
-            onDragEnd={() => {
-              setActiveId(null);
-            }}
-          >
-            <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
-              {columns.map(column => <Column key={column} id={column} />)}
-              {isCtrlDown && !isDialogOpen && activeId === null && <NewColumn />}
-            </SortableContext>
-            <DragOverlay>
-              {activeId
-                ? isColumn(activeId)
-                  ? <Column id={activeId} />
-                  : <Task id={activeId} />
-                : null}
-            </DragOverlay>
-          </DndContext>
-        </Stack >
-      </BoardContextProvider>
+              if (!activeColumn || !overColumn) return;
+              moveTask(activeId, overId, activeColumn, overColumn);
+            }
+          }}
+          onDragStart={({ active }) => {
+            setActiveId(active.id as string);
+          }}
+          onDragEnd={() => {
+            setActiveId(null);
+          }}
+        >
+          <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
+            {columns.map(column => <Column key={column} id={column} />)}
+            {isCtrlDown && !isDialogOpen && activeId === null && <NewColumn />}
+          </SortableContext>
+          <DragOverlay>
+            {activeId
+              ? isColumn(activeId)
+                ? <Column id={activeId} />
+                : <Task id={activeId} />
+              : null}
+          </DragOverlay>
+        </DndContext>
+      </Stack >
     </>
   );
 };

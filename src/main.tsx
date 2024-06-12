@@ -39,6 +39,9 @@ const customTheme = createTheme({
     },
     body1: {
       fontSize: '0.875rem'
+    },
+    caption: {
+      fontSize: '0.625rem'
     }
   },
   components: {

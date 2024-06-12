@@ -3,6 +3,13 @@ import { Board, ColumnData, ColumnDataMap, Id, TaskData, TaskDataMap } from '../
 import { useState } from 'react';
 import { arrayMove } from '@dnd-kit/sortable';
 
+export interface BoardSave {
+  columns: Id[];
+  board: Board;
+  columnData: ColumnDataMap;
+  taskData: TaskDataMap;
+}
+
 export interface BoardContext {
   columns: Id[];
   isColumn: (columnId: Id) => boolean;
@@ -18,26 +25,15 @@ export interface BoardContext {
   editTask: (taskId: Id, data: TaskData) => void;
   addColumn: (data: ColumnData) => void;
   editColumn: (columnId: Id, data: ColumnData) => void;
+  save: () => BoardSave;
+  load: (from: BoardSave) => void;
 }
 
 export const useBoard = (): BoardContext => {
-  const [columns, setColumns] = useState<Id[]>(() => [nanoid(), nanoid()]);
-  const [board, setBoard] = useState<Board>(() => ({
-    [columns[0]]: [nanoid(), nanoid(), nanoid()],
-    [columns[1]]: [nanoid(), nanoid(), nanoid()],
-  }));
-  const [columnData, setColumnData] = useState<ColumnDataMap>(() => ({
-    [columns[0]]: { title: 'In Progress' },
-    [columns[1]]: { title: 'Done' },
-  }));
-  const [taskData, setTaskData] = useState<TaskDataMap>(() => ({
-    [board[columns[0]][0]]: { title: 'title1', description: 'description1' },
-    [board[columns[0]][1]]: { title: 'title2', description: 'description2' },
-    [board[columns[0]][2]]: { title: 'title3', description: 'description3' },
-    [board[columns[1]][0]]: { title: 'title a', description: 'description a' },
-    [board[columns[1]][1]]: { title: 'title b', description: 'description b' },
-    [board[columns[1]][2]]: { title: 'title c', description: 'description c' },
-  }));
+  const [columns, setColumns] = useState<Id[]>([]);
+  const [board, setBoard] = useState<Board>({});
+  const [columnData, setColumnData] = useState<ColumnDataMap>({});
+  const [taskData, setTaskData] = useState<TaskDataMap>({});
 
   const isColumn = (columnId: Id) => columns.includes(columnId);
   const getColumnTasks = (columnId: Id) => board[columnId];
@@ -151,6 +147,22 @@ export const useBoard = (): BoardContext => {
     });
   };
 
+  const save = (): BoardSave => {
+    return {
+      columns,
+      board,
+      columnData,
+      taskData
+    }
+  }
+
+  const load = ({ columns, board, columnData, taskData }: BoardSave) => {
+    setColumns(columns);
+    setBoard(board);
+    setColumnData(columnData);
+    setTaskData(taskData);
+  }
+
   return {
     columns,
     isColumn,
@@ -165,6 +177,8 @@ export const useBoard = (): BoardContext => {
     addTask,
     editTask,
     addColumn,
-    editColumn
+    editColumn,
+    save,
+    load,
   };
 };
