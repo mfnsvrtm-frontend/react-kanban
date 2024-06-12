@@ -10,9 +10,10 @@ import SideMenu from './components/SideMenu';
 import LoadDialog from './components/LoadDialog';
 import SaveDialog from './components/SaveDialog';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
 interface KanbanLikeStorage {
-  saves: { name: string, data: BoardSave }[]
+  saves: { id: string, name: string, data: BoardSave }[]
   showInfo: boolean;
 }
 
@@ -23,27 +24,13 @@ const App = (): React.ReactNode => {
   const context = useBoard();
 
   console.log(storedValue)
-  const saveNames = storedValue.saves.map(save => save.name);
-
-  // const handleSave = () => {
-  //   console.log('saving')
-  //   setValue({
-  //     saves: {
-  //       '1': context.save(),
-  //     },
-  //     showInfo: true,
-  //   })
-  // }
-
-  // const handleLoad = () => {
-  //   context.load(storedValue?.saves['1']!);
-  // }
+  const saveData = storedValue.saves.map(save => ({ id: save.id, name: save.name }));
 
   const handleSaveDialogSuccess = (name: string) => {
     setShowSaveDialog(false);
     setValue({
       ...storedValue,
-      saves: [...storedValue.saves, { name, data: context.save() }]
+      saves: [...storedValue.saves, { id: nanoid(), name, data: context.save() }]
     })
   }
 
@@ -51,13 +38,20 @@ const App = (): React.ReactNode => {
     setShowSaveDialog(false);
   }
 
-  const handleLoadDialogSuccess = (name: string) => {
+  const handleLoadDialogSuccess = (id: string) => {
     setShowLoadDialog(false);
-    context.load(storedValue.saves.find(save => save.name === name)!.data);
+    context.load(storedValue.saves.find(save => save.id === id)!.data);
   }
 
   const handleLoadDialogClose = () => {
     setShowLoadDialog(false);
+  }
+
+  const handleDeleteSave = (id: string) => {
+    setValue({
+      ...storedValue,
+      saves: storedValue.saves.filter(save => save.id !== id)
+    })
   }
 
   return (
@@ -73,7 +67,7 @@ const App = (): React.ReactNode => {
       </AppBar>
       <Box sx={{ pt: 8, minWidth: '100vw', display: 'inline-grid', gridTemplateColumns: 'minmax(300px, 1fr) auto minmax(300px, 1fr)' }}>
         {showSaveDialog ? <SaveDialog onClose={handleSaveDialogClose} onSave={handleSaveDialogSuccess} /> : null}
-        {showLoadDialog ? <LoadDialog data={saveNames} onClose={handleLoadDialogClose} onLoad={handleLoadDialogSuccess} /> : null}
+        {showLoadDialog ? <LoadDialog data={saveData} onClose={handleLoadDialogClose} onLoad={handleLoadDialogSuccess} onDelete={handleDeleteSave} /> : null}
         <SideMenu onSave={() => setShowSaveDialog(true)} onLoad={() => setShowLoadDialog(true)} />
         <InfoCard />
         <DialogContextProvider>
