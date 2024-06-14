@@ -4,12 +4,12 @@ import Task from './Task';
 import { CollisionDetection, DndContext, DragOverlay, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import { useState } from 'react';
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
-import { MouseSensor } from '../utils/sensors';
+import { MouseSensor } from '../../utils/sensors';
 import NewColumn from './NewColumn';
-import useKeyboard from '../hooks/useKeyboard';
-import { useDialogContext } from '../providers/DialogContextProvider';
+import useKeyboard from '../../hooks/useKeyboard';
+import { useDialogContext } from '../../providers/DialogContextProvider';
 import { SxProps } from '@mui/system';
-import { useBoardContext } from '../providers/BoardContextProvider';
+import { useBoardContext } from '../../providers/BoardContextProvider';
 
 interface BoardProps {
   sx?: SxProps;

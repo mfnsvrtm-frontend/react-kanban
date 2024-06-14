@@ -1,5 +1,5 @@
 import { useDialogContext } from '../providers/DialogContextProvider';
-import { DialogType } from '../components/BoardDialog';
+import { DialogType } from '../components/dialogs/BoardDialog';
 
 interface DialogParams {
   type: DialogType;

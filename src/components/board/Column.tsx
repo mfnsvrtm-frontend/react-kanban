@@ -1,13 +1,13 @@
 import { SortableContext, useSortable, verticalListSortingStrategy, } from '@dnd-kit/sortable';
 import { Paper, Stack, Typography } from '@mui/material';
 import Task from './Task';
-import { Id } from '../types';
-import { useBoardContext } from '../providers/BoardContextProvider';
+import { Id } from '../../types';
+import { useBoardContext } from '../../providers/BoardContextProvider';
 import Overlay from './Overlay';
-import useHover from '../hooks/useHover';
+import useHover from '../../hooks/useHover';
 import NewTask from './NewTask';
-import useDialog from '../hooks/useDialog';
-import { DialogType } from './BoardDialog';
+import useDialog from '../../hooks/useDialog';
+import { DialogType } from '../dialogs/BoardDialog';
 
 interface ColumnProps {
   id: Id;

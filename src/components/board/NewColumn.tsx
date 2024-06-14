@@ -1,9 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Paper, Stack, Typography } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
-import useDialog from '../hooks/useDialog';
-import { DialogType } from './BoardDialog';
-import { useBoardContext } from '../providers/BoardContextProvider';
+import useDialog from '../../hooks/useDialog';
+import { DialogType } from '../dialogs/BoardDialog';
+import { useBoardContext } from '../../providers/BoardContextProvider';
 
 const NewColumn = (): React.ReactNode => {
   const { addColumn } = useBoardContext();

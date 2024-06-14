@@ -1,5 +1,5 @@
 import { AppBar, Box, Container, Toolbar, Typography } from '@mui/material';
-import Board from './components/Board';
+import Board from './components/board/Board';
 import { DialogContextProvider } from './providers/DialogContextProvider';
 import CursorOverrideProvider from './providers/CursorOverrideProvider';
 import { BoardContextProvider } from './providers/BoardContextProvider';
@@ -7,12 +7,12 @@ import { BoardSave, useBoard } from './hooks/useBoard';
 import useLocalStorage from './hooks/useLocalStorage';
 import InfoCard from './components/InfoCard';
 import SideMenu from './components/SideMenu';
-import LoadDialog from './components/LoadDialog';
-import SaveDialog from './components/SaveDialog';
-import SettingsDialog, { Settings } from './components/SettingsDialog';
+import LoadDialog from './components/dialogs/LoadDialog';
+import SaveDialog from './components/dialogs/SaveDialog';
+import SettingsDialog, { Settings } from './components/dialogs/SettingsDialog';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import ClearDialog from './components/ClearDialog';
+import ClearDialog from './components/dialogs/ClearDialog';
 
 interface KanbanLikeStorage {
   saves: { id: string, name: string, data: BoardSave }[]
@@ -27,7 +27,6 @@ const App = (): React.ReactNode => {
   const { storedValue, setValue } = useLocalStorage<KanbanLikeStorage>('kanbanLikeStore', { saves: [], showInfo: true })
   const context = useBoard();
 
-  console.log(storedValue)
   const saveData = storedValue.saves.map(save => ({ id: save.id, name: save.name }));
 
   const handleSaveDialogSuccess = (name: string) => {

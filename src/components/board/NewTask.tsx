@@ -1,11 +1,11 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Paper } from '@mui/material';
-import { DialogType } from './BoardDialog';
-import { Id } from '../types';
-import { useBoardContext } from '../providers/BoardContextProvider';
-import useDialog from '../hooks/useDialog';
+import { DialogType } from '../dialogs/BoardDialog';
+import { Id } from '../../types';
+import { useBoardContext } from '../../providers/BoardContextProvider';
+import useDialog from '../../hooks/useDialog';
 import { useEffect, useRef } from 'react';
-import useMousePredicate from '../hooks/useMousePosition';
+import useMousePredicate from '../../hooks/useMousePosition';
 
 const scrollThreshold = 200;
 

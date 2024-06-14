@@ -1,11 +1,11 @@
 import { Card, CardContent, Divider, Typography } from '@mui/material';
 import { useSortable } from '@dnd-kit/sortable';
-import { Id } from '../types';
-import { useBoardContext } from '../providers/BoardContextProvider';
+import { Id } from '../../types';
+import { useBoardContext } from '../../providers/BoardContextProvider';
 import Overlay from './Overlay';
-import useHover from '../hooks/useHover';
-import useDialog from '../hooks/useDialog';
-import { DialogType } from './BoardDialog';
+import useHover from '../../hooks/useHover';
+import useDialog from '../../hooks/useDialog';
+import { DialogType } from '../dialogs/BoardDialog';
 
 interface TaskProps {
   id: Id;
