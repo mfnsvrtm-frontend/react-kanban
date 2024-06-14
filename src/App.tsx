@@ -9,8 +9,10 @@ import InfoCard from './components/InfoCard';
 import SideMenu from './components/SideMenu';
 import LoadDialog from './components/LoadDialog';
 import SaveDialog from './components/SaveDialog';
+import SettingsDialog, { Settings } from './components/SettingsDialog';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
+import ClearDialog from './components/ClearDialog';
 
 interface KanbanLikeStorage {
   saves: { id: string, name: string, data: BoardSave }[]
@@ -20,6 +22,8 @@ interface KanbanLikeStorage {
 const App = (): React.ReactNode => {
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [showLoadDialog, setShowLoadDialog] = useState(false);
+  const [showClearDialog, setShowClearDialog] = useState(false);
+  const [showSettingsDialog, setShowSettingsDialog] = useState(false);
   const { storedValue, setValue } = useLocalStorage<KanbanLikeStorage>('kanbanLikeStore', { saves: [], showInfo: true })
   const context = useBoard();
 
@@ -47,6 +51,34 @@ const App = (): React.ReactNode => {
     setShowLoadDialog(false);
   }
 
+  const handleClearDialogAccept = () => {
+    setShowClearDialog(false);
+    context.clear();
+  }
+
+  const handleClearDialogDecline = () => {
+    setShowClearDialog(false);
+  }
+
+  const handleSettingsDialogSuccess = (settings: Settings) => {
+    setShowSettingsDialog(false);
+    setValue({
+      ...storedValue,
+      showInfo: settings.showInfo,
+    })
+  }
+
+  const handleSettingsDialogClose = () => {
+    setShowSettingsDialog(false);
+  }
+
+  const handleDontShowThisAgain = () => {
+    setValue({
+      ...storedValue,
+      showInfo: false,
+    })
+  }
+
   const handleDeleteSave = (id: string) => {
     setValue({
       ...storedValue,
@@ -65,11 +97,13 @@ const App = (): React.ReactNode => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Box sx={{ pt: 8, minWidth: '100vw', display: 'inline-grid', gridTemplateColumns: 'minmax(300px, 1fr) auto minmax(300px, 1fr)' }}>
+      <Box pt={8} height='100%' minWidth='100vw' display='inline-grid' gridTemplateColumns='minmax(300px, 1fr) auto minmax(300px, 1fr)'>
         {showSaveDialog ? <SaveDialog onClose={handleSaveDialogClose} onSave={handleSaveDialogSuccess} /> : null}
         {showLoadDialog ? <LoadDialog data={saveData} onClose={handleLoadDialogClose} onLoad={handleLoadDialogSuccess} onDelete={handleDeleteSave} /> : null}
-        <SideMenu onSave={() => setShowSaveDialog(true)} onLoad={() => setShowLoadDialog(true)} />
-        <InfoCard />
+        {showClearDialog ? <ClearDialog onAccept={handleClearDialogAccept} onDecline={handleClearDialogDecline} /> : null}
+        {showSettingsDialog ? <SettingsDialog currentValues={{ showInfo: storedValue.showInfo }} onSave={handleSettingsDialogSuccess} onClose={handleSettingsDialogClose} /> : null}
+        <SideMenu onSave={() => setShowSaveDialog(true)} onLoad={() => setShowLoadDialog(true)} onClear={() => setShowClearDialog(true)} onSettings={() => setShowSettingsDialog(true)} />
+        {storedValue.showInfo ? <InfoCard onDontShowAgain={handleDontShowThisAgain} /> : null}
         <DialogContextProvider>
           <CursorOverrideProvider>
             <BoardContextProvider context={context}>

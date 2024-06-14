@@ -1,7 +1,11 @@
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { useState } from 'react';
 
-const InfoCard = (): React.ReactNode => {
+interface InfoCardProps {
+  onDontShowAgain: () => void;
+}
+
+const InfoCard = ({ onDontShowAgain }: InfoCardProps): React.ReactNode => {
   const [isOpen, setIsOpen] = useState(true);
 
   // https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style
@@ -27,7 +31,7 @@ const InfoCard = (): React.ReactNode => {
       </CardContent>
       <CardActions disableSpacing sx={{ justifyContent: 'end' }} >
         <Button onClick={() => setIsOpen(false)} sx={{ fontSize: '12px', minWidth: '0', px: 1.5 }}>Ok</Button>
-        <Button onClick={() => setIsOpen(false)} sx={{ fontSize: '12px', minWidth: '0', px: 1.5 }}>Don't show this again</Button>
+        <Button onClick={() => { setIsOpen(false); onDontShowAgain(); }} sx={{ fontSize: '12px', minWidth: '0', px: 1.5 }}>Don't show this again</Button>
       </CardActions>
     </Card>
   );

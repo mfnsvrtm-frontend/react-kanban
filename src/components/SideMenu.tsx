@@ -1,15 +1,19 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import DownloadIcon from '@mui/icons-material/Download';
 import UploadIcon from '@mui/icons-material/Upload';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
 interface SideMenuProps {
   onSave: () => void;
   onLoad: () => void;
+  onClear: () => void;
+  onSettings: () => void;
 }
 
-const SideMenu = ({ onSave, onLoad }: SideMenuProps): React.ReactNode => {
+const SideMenu = ({ onSave, onLoad, onClear, onSettings }: SideMenuProps): React.ReactNode => {
   return (
     <Box
       display='grid'
@@ -42,7 +46,7 @@ const SideMenu = ({ onSave, onLoad }: SideMenuProps): React.ReactNode => {
       <Box display='grid' overflow='hidden'>
         <IconButton size='large' sx={{ aspectRatio: '1' }} onClick={onSave}>
           <Box display='grid' justifyItems='center'>
-            <DownloadIcon />
+            <DownloadIcon/>
             <Typography variant='caption' >Save</Typography>
           </Box>
         </IconButton>
@@ -50,6 +54,18 @@ const SideMenu = ({ onSave, onLoad }: SideMenuProps): React.ReactNode => {
           <Box display='grid' justifyItems='center'>
             <UploadIcon />
             <Typography variant='caption'>Load</Typography>
+          </Box>
+        </IconButton>
+        <IconButton size='large' sx={{ aspectRatio: '1' }} onClick={onClear}>
+          <Box display='grid' justifyItems='center'>
+            <DeleteIcon />
+            <Typography variant='caption'>Clear</Typography>
+          </Box>
+        </IconButton>
+        <IconButton size='large' sx={{ aspectRatio: '1' }} onClick={onSettings}>
+          <Box display='grid' justifyItems='center'>
+            <SettingsIcon />
+            <Typography variant='caption'>Settings</Typography>
           </Box>
         </IconButton>
       </Box>

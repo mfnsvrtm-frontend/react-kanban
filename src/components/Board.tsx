@@ -40,46 +40,44 @@ const Board = ({ sx }: BoardProps): React.ReactNode => {
   };
 
   return (
-    <>
-      <Stack direction='row' gap={2} paddingBlock={2} sx={{ height: 'fit-content', ...sx }}>
-        <DndContext
-          sensors={sensors}
-          collisionDetection={collisionDetectionStrategy}
-          onDragOver={({ over }) => {
-            if (!over || !activeId) return;
-            const overId = over.id as string;
+    <Stack direction='row' gap={2} paddingBlock={2} sx={{ height: 'fit-content', ...sx }}>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={collisionDetectionStrategy}
+        onDragOver={({ over }) => {
+          if (!over || !activeId) return;
+          const overId = over.id as string;
 
-            if (isColumn(activeId)) {
-              moveColumn(activeId, overId);
-            } else {
-              const activeColumn = getColumnById(activeId);
-              const overColumn = getColumnById(overId);
+          if (isColumn(activeId)) {
+            moveColumn(activeId, overId);
+          } else {
+            const activeColumn = getColumnById(activeId);
+            const overColumn = getColumnById(overId);
 
-              if (!activeColumn || !overColumn) return;
-              moveTask(activeId, overId, activeColumn, overColumn);
-            }
-          }}
-          onDragStart={({ active }) => {
-            setActiveId(active.id as string);
-          }}
-          onDragEnd={() => {
-            setActiveId(null);
-          }}
-        >
-          <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
-            {columns.map(column => <Column key={column} id={column} />)}
-            {isCtrlDown && !isDialogOpen && activeId === null && <NewColumn />}
-          </SortableContext>
-          <DragOverlay>
-            {activeId
-              ? isColumn(activeId)
-                ? <Column id={activeId} />
-                : <Task id={activeId} />
-              : null}
-          </DragOverlay>
-        </DndContext>
-      </Stack >
-    </>
+            if (!activeColumn || !overColumn) return;
+            moveTask(activeId, overId, activeColumn, overColumn);
+          }
+        }}
+        onDragStart={({ active }) => {
+          setActiveId(active.id as string);
+        }}
+        onDragEnd={() => {
+          setActiveId(null);
+        }}
+      >
+        <SortableContext items={columns} strategy={horizontalListSortingStrategy}>
+          {columns.map(column => <Column key={column} id={column} />)}
+          {isCtrlDown && !isDialogOpen && activeId === null && <NewColumn />}
+        </SortableContext>
+        <DragOverlay>
+          {activeId
+            ? isColumn(activeId)
+              ? <Column id={activeId} />
+              : <Task id={activeId} />
+            : null}
+        </DragOverlay>
+      </DndContext>
+    </Stack>
   );
 };
 

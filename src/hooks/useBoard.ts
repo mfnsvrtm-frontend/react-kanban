@@ -27,6 +27,7 @@ export interface BoardContext {
   editColumn: (columnId: Id, data: ColumnData) => void;
   save: () => BoardSave;
   load: (from: BoardSave) => void;
+  clear: () => void;
 }
 
 export const useBoard = (): BoardContext => {
@@ -163,6 +164,13 @@ export const useBoard = (): BoardContext => {
     setTaskData(taskData);
   }
 
+  const clear = () => {
+    setColumns([]);
+    setBoard({});
+    setColumnData({});
+    setTaskData({});
+  }
+
   return {
     columns,
     isColumn,
@@ -180,5 +188,6 @@ export const useBoard = (): BoardContext => {
     editColumn,
     save,
     load,
+    clear,
   };
 };

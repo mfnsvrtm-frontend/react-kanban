@@ -34,7 +34,6 @@ const useLocalStorage = <T>(
 
   const setValue: Dispatch<T> = useCallback(value => {
     try {
-      console.log(key, serializer(value));
       window.localStorage.setItem(key, serializer(value));
       setStoredValue(value);
     } catch (error) {
