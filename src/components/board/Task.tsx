@@ -5,7 +5,7 @@ import { useBoardContext } from '../../providers/BoardContextProvider';
 import Overlay from './Overlay';
 import useHover from '../../hooks/useHover';
 import useDialog from '../../hooks/useDialog';
-import { DialogType } from '../dialogs/BoardDialog';
+import { editTaskDialogContent } from '../dialogs/AddEditTaskDialogs';
 
 interface TaskProps {
   id: Id;
@@ -18,9 +18,9 @@ const Task = ({ id }: TaskProps): React.ReactNode => {
 
   const { title, description } = getTaskData(id);
   const openEditDialog = useDialog({
-    type: DialogType.EditTask,
-    data: { title, description },
-    onSuccess: (data: FormData) => {
+    content: editTaskDialogContent,
+    props: { title, description },
+    onAccept: (data: FormData) => {
       editTask(id, {
         title: data.get('title') as string,
         description: data.get('description') as string

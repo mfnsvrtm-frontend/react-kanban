@@ -1,11 +1,11 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Paper } from '@mui/material';
-import { DialogType } from '../dialogs/BoardDialog';
 import { Id } from '../../types';
 import { useBoardContext } from '../../providers/BoardContextProvider';
 import useDialog from '../../hooks/useDialog';
 import { useEffect, useRef } from 'react';
 import useMousePredicate from '../../hooks/useMousePosition';
+import { addTaskDialogContent } from '../dialogs/AddEditTaskDialogs';
 
 const scrollThreshold = 200;
 
@@ -19,8 +19,8 @@ const NewTask = ({ columnId }: NewTaskProps): React.ReactNode => {
   const { addTask } = useBoardContext();
 
   const openDialog = useDialog({
-    type: DialogType.AddTask,
-    onSuccess: (data: FormData) => {
+    content: addTaskDialogContent,
+    onAccept: (data: FormData) => {
       addTask(
         columnId,
         {

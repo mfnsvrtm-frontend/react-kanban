@@ -2,8 +2,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { Paper, Stack, Typography } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
 import useDialog from '../../hooks/useDialog';
-import { DialogType } from '../dialogs/BoardDialog';
 import { useBoardContext } from '../../providers/BoardContextProvider';
+import { addColumnDialogContent } from '../dialogs/AddEditColumnDialogs';
 
 const NewColumn = (): React.ReactNode => {
   const { addColumn } = useBoardContext();
@@ -14,8 +14,8 @@ const NewColumn = (): React.ReactNode => {
   }, []);
 
   const openDialog = useDialog({
-    type: DialogType.AddColumn,
-    onSuccess: (data: FormData) => {
+    content: addColumnDialogContent,
+    onAccept: (data: FormData) => {
       addColumn({
         title: data.get('title') as string,
       });

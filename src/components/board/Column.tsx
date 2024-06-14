@@ -7,7 +7,7 @@ import Overlay from './Overlay';
 import useHover from '../../hooks/useHover';
 import NewTask from './NewTask';
 import useDialog from '../../hooks/useDialog';
-import { DialogType } from '../dialogs/BoardDialog';
+import { editColumnDialogContent } from '../dialogs/AddEditColumnDialogs';
 
 interface ColumnProps {
   id: Id;
@@ -23,9 +23,9 @@ const Column = ({ id }: ColumnProps): React.ReactNode => {
   const { title } = getColumnData(id);
 
   const openEditDialog = useDialog({
-    type: DialogType.EditColumn,
-    data: { title },
-    onSuccess: (data: FormData) => {
+    content: editColumnDialogContent,
+    props: { title },
+    onAccept: (data: FormData) => {
       editColumn(id, {
         title: data.get('title') as string,
       });

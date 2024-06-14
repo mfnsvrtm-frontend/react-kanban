@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { PropsWithChildren, createContext, useContext } from 'react';
-import { BoardDialog, DialogType } from '../components/dialogs/BoardDialog';
+import DialogBase, { DialogContent, DialogDefinition } from '../components/dialogs/DialogBase';
 
 type OpenDialogFn = (
-  type: DialogType,
-  data: { [name: string]: string; },
-  onCancel: () => void,
-  onSuccess: (data: FormData) => void
+  content: DialogContent,
+  props: any,
+  onAccept: (data: FormData) => void,
+  onDecline: () => void
 ) => void;
 
 interface DialogContext {
@@ -25,28 +25,21 @@ export const useDialogContext = (): DialogContext => {
   return context;
 };
 
-interface DialogData {
-  type: DialogType;
-  data: { [name: string]: string; };
-  onCancel: () => void;
-  onSuccess: (data: FormData) => void;
-}
-
 export const DialogContextProvider = ({ children }: PropsWithChildren): React.ReactNode => {
-  const [dialogData, setDialogData] = useState<DialogData>(null!);
+  const [dialogData, setDialogData] = useState<DialogDefinition>(null!);
   const [isOpen, setIsOpen] = useState(false);
 
-  const open: OpenDialogFn = (type, data, onCancel, onSuccess) => {
+  const open: OpenDialogFn = (content, props, onAccept, onDecline) => {
     setIsOpen(true);
     setDialogData({
-      type,
-      data,
-      onCancel: () => {
-        onCancel();
+      content,
+      props,
+      onAccept: (data) => {
+        onAccept(data);
         setIsOpen(false);
       },
-      onSuccess: (data) => {
-        onSuccess(data);
+      onDecline: () => {
+        onDecline();
         setIsOpen(false);
       }
     });
@@ -55,7 +48,7 @@ export const DialogContextProvider = ({ children }: PropsWithChildren): React.Re
   return (
     <dialogContext.Provider value={{ isOpen, open }}>
       {children}
-      {isOpen && <BoardDialog {...dialogData} />}
+      {isOpen && <DialogBase {...dialogData} />}
     </dialogContext.Provider>
   );
 };
