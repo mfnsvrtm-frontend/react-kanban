@@ -1,33 +1,15 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import { DialogContent } from './DialogBase';
 
-interface ClearDialogProps {
-  onAccept: () => void;
-  onDecline: () => void;
-};
-
-const ClearDialog = ({ onAccept, onDecline }: ClearDialogProps): React.ReactNode => {
+const DialogBody = (): React.ReactNode => {
   return (
-    <Dialog
-      open
-      onClose={onDecline}
-      PaperProps={{
-        component: 'form',
-        onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-          event.preventDefault();
-          onAccept();
-        },
-      }}
-    >
-      <DialogTitle>Clear the board</DialogTitle>
-      <DialogContent sx={{ width: 500 }}>
-        <Typography>Are you sure you want to clear the board?</Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onDecline}>No</Button>
-        <Button type='submit'>Yes</Button>
-      </DialogActions>
-    </Dialog>
+    <Typography>Are you sure you want to clear the board?</Typography>
   );
 };
 
-export default ClearDialog;
+export const clearDialogContent: DialogContent = {
+  title: 'Clear the board',
+  body: DialogBody,
+  acceptLabel: 'Yes',
+  declineLabel: 'No'
+};

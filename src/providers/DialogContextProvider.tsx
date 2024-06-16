@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { PropsWithChildren, createContext, useContext } from 'react';
 import DialogBase, { DialogContent, DialogDefinition } from '../components/dialogs/DialogBase';
+import { SxProps, Theme } from '@mui/system';
 
 type OpenDialogFn = (
   content: DialogContent,
   props: any,
   onAccept: (data: FormData) => void,
-  onDecline: () => void
+  onDecline: () => void,
+  sx: SxProps<Theme> | undefined
 ) => void;
 
 interface DialogContext {
@@ -26,12 +28,12 @@ export const useDialogContext = (): DialogContext => {
 };
 
 export const DialogContextProvider = ({ children }: PropsWithChildren): React.ReactNode => {
-  const [dialogData, setDialogData] = useState<DialogDefinition>(null!);
+  const [dialogDefinition, setDialogDefinition] = useState<DialogDefinition>(null!);
   const [isOpen, setIsOpen] = useState(false);
 
-  const open: OpenDialogFn = (content, props, onAccept, onDecline) => {
+  const open: OpenDialogFn = (content, props, onAccept, onDecline, sx) => {
     setIsOpen(true);
-    setDialogData({
+    setDialogDefinition({
       content,
       props,
       onAccept: (data) => {
@@ -41,14 +43,15 @@ export const DialogContextProvider = ({ children }: PropsWithChildren): React.Re
       onDecline: () => {
         onDecline();
         setIsOpen(false);
-      }
+      },
+      sx
     });
   };
 
   return (
     <dialogContext.Provider value={{ isOpen, open }}>
       {children}
-      {isOpen && <DialogBase {...dialogData} />}
+      {isOpen && <DialogBase {...dialogDefinition} />}
     </dialogContext.Provider>
   );
 };

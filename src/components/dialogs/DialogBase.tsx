@@ -1,19 +1,21 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, SxProps, Theme } from '@mui/material';
 
 export interface DialogContent {
   title: string;
   body: (props: any) => React.ReactNode;
   acceptLabel: string;
+  declineLabel?: string;
 }
 
 export interface DialogDefinition {
-  content: DialogContent,
-  props: any,
-  onAccept: (data: FormData) => void,
-  onDecline: () => void
+  content: DialogContent;
+  props: any;
+  onAccept: (data: FormData) => void;
+  onDecline: () => void;
+  sx?: SxProps<Theme>;
 }
 
-const DialogBase = ({ content, props, onAccept, onDecline }: DialogDefinition): React.ReactNode => {
+const DialogBase = ({ content, props, onAccept, onDecline, sx }: DialogDefinition): React.ReactNode => {
   return (
     <Dialog
       open
@@ -28,11 +30,11 @@ const DialogBase = ({ content, props, onAccept, onDecline }: DialogDefinition): 
       }}
     >
       <DialogTitle>{content.title}</DialogTitle>
-      <DialogContent>
-        {content.body(props)}
+      <DialogContent sx={sx}>
+        <content.body {...props} />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onDecline}>Cancel</Button>
+        <Button onClick={onDecline}>{content.declineLabel || 'Cancel'}</Button>
         <Button type='submit'>{content.acceptLabel}</Button>
       </DialogActions>
     </Dialog>
