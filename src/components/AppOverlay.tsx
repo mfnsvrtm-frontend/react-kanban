@@ -9,6 +9,7 @@ import { settingsDialogContent } from './dialogs/SettingsDialog';
 import { clearDialogContent } from './dialogs/ClearDialog';
 import { saveDialogContent } from './dialogs/SaveDialog';
 import { BoardSave } from '../hooks/useBoard';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 export interface KanbanLikeStorage {
   saves: { id: string, name: string, data: BoardSave; }[];
